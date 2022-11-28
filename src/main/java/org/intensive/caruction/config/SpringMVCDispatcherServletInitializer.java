@@ -1,7 +1,11 @@
 package org.intensive.caruction.config;
 
 import org.springframework.lang.NonNull;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 public class SpringMVCDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -12,7 +16,7 @@ public class SpringMVCDispatcherServletInitializer extends AbstractAnnotationCon
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {SpringConfig.class};
+        return new Class[] {SpringConfig.class, WebSecurityConfig.class};
     }
 
     @Override
@@ -20,4 +24,5 @@ public class SpringMVCDispatcherServletInitializer extends AbstractAnnotationCon
     protected String[] getServletMappings() {
         return new String[] {"/"};
     }
+
 }
