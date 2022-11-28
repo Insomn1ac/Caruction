@@ -16,4 +16,5 @@
     <include file="scripts/006_ddl_create_table_lotRequests.sql" relativeToChangelogFile="true"/>
     <include file="scripts/007_ddl_create_table_categories.sql" relativeToChangelogFile="true"/>
     <include file="scripts/008_ddl_create_table_auctions.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/009_ddl_drop_table_roles_create_table_user_roles.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
