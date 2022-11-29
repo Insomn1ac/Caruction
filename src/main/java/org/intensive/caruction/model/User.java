@@ -47,7 +47,7 @@ public class User {
     @Column(name = "wallet_id")
     private int walletId;
 
-    @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+    @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false, insertable = false)
     private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)
