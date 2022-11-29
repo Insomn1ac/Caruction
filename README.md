@@ -1,6 +1,12 @@
 # Caruction
 <h2>A simple car auction app</h2>
 
+<h3>To run:</h3>
+mvn clean package spring-boot:repackage
+<h3>then:</h3>
+cd c:/path/to/dir/with/project</br>
+java -jar Caruction.jar
+
 <h3>test credentials</h3>
 
 login: user </br>
