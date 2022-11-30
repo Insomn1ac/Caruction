@@ -35,7 +35,9 @@ public class AuctionServiceImpl {
         if (auctionRepository.findById(id).isPresent()) {
             auctionRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

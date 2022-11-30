@@ -45,7 +45,11 @@ public class LotRequestServiceImpl {
 
                 lotRequestRepository.deleteById(request.get().getId());
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

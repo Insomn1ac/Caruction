@@ -33,8 +33,9 @@ public class AuthController {
         User user = modelMapper.map(registrationDTO, User.class);
 
         userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return Map.of("message", "User unvalid");
+        }
 
         registrationService.register(user);
 

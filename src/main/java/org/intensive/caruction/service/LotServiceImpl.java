@@ -35,7 +35,9 @@ public class LotServiceImpl {
         if (lotRepository.findById(id).isPresent()) {
             lotRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity<?> updateRecipe(Long id, Lot lot) {
