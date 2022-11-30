@@ -8,7 +8,6 @@ import org.intensive.caruction.service.RegistrationService;
 import org.intensive.caruction.util.UserValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
