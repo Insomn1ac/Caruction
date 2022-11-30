@@ -42,7 +42,7 @@ public class User {
     private String password;
 
     @Column(name = "wallet_id")
-    private int walletId;
+    private long walletId;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false, insertable = false)
     @NotNull
