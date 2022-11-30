@@ -13,11 +13,7 @@ public class Wallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     private double balance;
-
-    @ManyToOne
-    @JoinColumn(name = "currency_id")
-    private Currency currency;
 }

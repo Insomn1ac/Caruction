@@ -22,4 +22,5 @@
     <include file="scripts/012_ddl_lot_request_add_column_date.sql" relativeToChangelogFile="true"/>
     <include file="scripts/013_ddl_categories_fix_id.sql" relativeToChangelogFile="true"/>
     <include file="scripts/014_ddl_auctions_change_add_columns.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/015_ddl_drop_table_currencies_update_table_wallets.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

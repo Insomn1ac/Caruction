@@ -17,7 +17,7 @@ public class UserDTO {
     private String name;
 
     @NotBlank
-    @Size(min = 5, max = 128)
+    @Size(min = 4, max = 128)
     private String password;
 
     @Email
