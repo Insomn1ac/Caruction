@@ -1,11 +1,16 @@
 package org.intensive.caruction.service;
 
 import lombok.RequiredArgsConstructor;
+import org.intensive.caruction.dto.JwtResponse;
+import org.intensive.caruction.dto.LoginRequest;
 import org.intensive.caruction.model.Role;
 import org.intensive.caruction.model.User;
 import org.intensive.caruction.model.Wallet;
 import org.intensive.caruction.repository.UserRepository;
 import org.intensive.caruction.repository.WalletRepository;
+import org.intensive.caruction.security.JWTUtil;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +20,13 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 @Transactional()
-public class RegistrationService {
+public class AuthService {
 
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JWTUtil jwtUtil;
 
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -33,5 +40,16 @@ public class RegistrationService {
         walletRepository.save(wallet);
         user.setWalletId(wallet.getId());
         userRepository.save(user);
+    }
+
+    public JwtResponse authenticateUser(LoginRequest authBody) {
+        UsernamePasswordAuthenticationToken authInputToken =
+                new UsernamePasswordAuthenticationToken(authBody.getName(),
+                        authBody.getPassword());
+        authenticationManager.authenticate(authInputToken);
+        String token = jwtUtil.generateToken(authBody.getName());
+        return JwtResponse.builder()
+                .token(token)
+                .build();
     }
 }
