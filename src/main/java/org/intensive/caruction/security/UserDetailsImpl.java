@@ -21,6 +21,10 @@ public class UserDetailsImpl implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
