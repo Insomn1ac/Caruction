@@ -9,10 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -48,6 +45,7 @@ public class User {
     private int walletId;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false, insertable = false)
+    @NotNull
     private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)
@@ -59,7 +57,7 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
-    @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     private boolean enabled = true;
 
     public int id() {
