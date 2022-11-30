@@ -38,11 +38,11 @@ public class User {
 
     @Column(name = "password", nullable = false)
     @NotBlank
-    @Size(min = 4, max = 128)
+    @Size(min = 5, max = 128)
     private String password;
 
     @Column(name = "wallet_id")
-    private long walletId;
+    private int walletId;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false, insertable = false)
     @NotNull

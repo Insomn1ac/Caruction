@@ -22,7 +22,7 @@ public class RegistrationDTO {
     private String email;
 
     @NotBlank
-    @Size(min = 4, max = 128)
+    @Size(min = 5, max = 128)
     private String password;
 
 }
