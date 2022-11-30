@@ -16,8 +16,4 @@ public class Wallet {
     private long id;
 
     private double balance;
-
-    @ManyToOne
-    @JoinColumn(name = "currency_id")
-    private Currency currency;
 }
