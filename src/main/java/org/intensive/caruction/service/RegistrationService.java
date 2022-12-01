@@ -24,9 +24,9 @@ public class RegistrationService {
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (("admin").equals(user.getName())) {
-            user.setRoles(Set.of(Role.ADMIN, Role.USER));
+            user.setRole(Role.ADMIN);
         } else {
-            user.setRoles(Set.of(Role.USER));
+            user.setRole(Role.USER);
         }
         Wallet wallet = new Wallet();
         wallet.setBalance(0D);
