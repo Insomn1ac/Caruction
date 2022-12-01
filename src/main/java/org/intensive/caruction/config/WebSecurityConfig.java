@@ -2,8 +2,6 @@ package org.intensive.caruction.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.intensive.caruction.controller.AdminController;
-import org.intensive.caruction.model.Role;
 import org.intensive.caruction.security.JWTFilter;
 import org.intensive.caruction.service.UserDetailsServiceImpl;
 import org.modelmapper.ModelMapper;
@@ -41,10 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .anyRequest().hasAnyRole("USER", "ADMIN")
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
