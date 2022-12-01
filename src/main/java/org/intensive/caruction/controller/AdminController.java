@@ -18,7 +18,7 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping
-    @PreAuthorize("ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> adminGetAll() {
         return userService.getAll();
     }
