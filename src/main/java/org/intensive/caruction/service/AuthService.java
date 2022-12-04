@@ -10,7 +10,6 @@ import org.intensive.caruction.repository.UserRepository;
 import org.intensive.caruction.repository.WalletRepository;
 import org.intensive.caruction.security.JWTUtil;
 import org.intensive.caruction.security.UserDetailsImpl;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,8 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +32,9 @@ public class AuthService {
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (("admin").equals(user.getName())) {
-            user.setRole(Role.ADMIN);
+            user.setRole(Role.ADMIN.name());
         } else {
-            user.setRole(Role.USER);
+            user.setRole(Role.USER.name());
         }
         Wallet wallet = new Wallet();
         wallet.setBalance(0D);
