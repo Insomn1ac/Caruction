@@ -1,5 +1,6 @@
 package org.intensive.caruction.service;
 
+import org.intensive.caruction.exception.ElementNotFoundException;
 import org.intensive.caruction.model.Auction;
 import org.intensive.caruction.repository.AuctionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,15 @@ public class AuctionServiceImpl {
         this.auctionRepository = auctionRepository;
     }
 
-    // TODO handle with custom exeption
+    public ResponseEntity<?> save(Auction auction) {
+        auctionRepository.save(auction);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
     public Auction findAuctionById(Long id) {
         return auctionRepository.findById(id)
                 .orElseThrow(() ->
-                        new NoSuchElementException(
+                        new ElementNotFoundException(
                                 "Auction not found for id = " + id));
     }
 
