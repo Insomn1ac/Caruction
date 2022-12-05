@@ -1,2 +1,0 @@
-ALTER TABLE lot_requests
-    ADD COLUMN IF NOT EXISTS created_date TIMESTAMP;
