@@ -23,4 +23,9 @@ public class UserService {
         log.info("getAll");
         return userRepository.findAll();
     }
+
+    public User getById(int id) {
+        log.info("get user by id");
+        return userRepository.findById(id).get();
+    }
 }

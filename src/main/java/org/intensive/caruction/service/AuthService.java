@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 @Transactional()
@@ -32,9 +34,9 @@ public class AuthService {
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (("admin").equals(user.getName())) {
-            user.setRole(Role.ADMIN.name());
+            user.setRoles(Set.of(Role.ADMIN, Role.USER));
         } else {
-            user.setRole(Role.USER.name());
+            user.setRoles(Set.of(Role.USER));
         }
         Wallet wallet = new Wallet();
         wallet.setBalance(0D);

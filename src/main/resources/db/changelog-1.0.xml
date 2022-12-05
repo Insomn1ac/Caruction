@@ -58,17 +58,6 @@
     <changeSet id="1.0.6" author="eugene.emelyanov">
         <preConditions onFail="MARK_RAN">
             <not>
-                <columnExists tableName="users" columnName="role"/>
-            </not>
-        </preConditions>
-        <addColumn tableName="users">
-            <column name="role" type="VARCHAR(50)"/>
-        </addColumn>
-    </changeSet>
-
-    <changeSet id="1.0.7" author="eugene.emelyanov">
-        <preConditions onFail="MARK_RAN">
-            <not>
                 <tableExists tableName="users"/>
             </not>
         </preConditions>
@@ -92,9 +81,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="enabled" type="BOOLEAN" defaultValue="true">
-                <constraints nullable="false"/>
-            </column>
-            <column name="role" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -184,6 +170,28 @@
                                  baseColumnNames="lot_id"
                                  constraintName="auctions_lot"
                                  referencedTableName="lots"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="1.0.12" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user_roles"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user_roles">
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="user_role"
+                                 referencedTableName="users"
                                  referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>
