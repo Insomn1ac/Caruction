@@ -1,2 +1,0 @@
-ALTER TABLE wallets
-    ALTER COLUMN balance TYPE DECIMAL(20, 2);
