@@ -21,7 +21,6 @@ public class Auction {
     @Column(name = "start_date")
     private LocalDateTime startDate;
 
-    @NotEmpty
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
