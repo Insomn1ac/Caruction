@@ -15,7 +15,7 @@ public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @NotEmpty
     @Column(name = "start_date")
@@ -33,4 +33,8 @@ public class Auction {
     private Lot lot;
 
     private String status;
+
+    // TODO remove and undo NOT NULL for startDate in the database
+    @PrePersist
+    void createDate() { this.startDate=LocalDateTime.now(); }
 }
