@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet id="1.0.0" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="auctions" columnName="category_id"/>
+        </preConditions>
+        <dropColumn tableName="auctions" columnName="category_id">
+            <column name="category_id"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="wallets" columnName="currency_id"/>
+        </preConditions>
+        <dropColumn tableName="wallets" columnName="currency_id">
+            <column name="currency_id"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="user_roles"/>
+        </preConditions>
+        <dropTable tableName="user_roles"/>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="currencies"/>
+        </preConditions>
+        <dropTable tableName="currencies"/>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="categories"/>
+        </preConditions>
+        <dropTable tableName="categories"/>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="roles"/>
+        </preConditions>
+        <dropTable tableName="roles"/>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="users">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wallet_id" type="INTEGER">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="registered" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.8" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="wallets"/>
+            </not>
+        </preConditions>
+        <createTable tableName="wallets">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="balance" type="DECIMAL(20, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.9" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="lots"/>
+            </not>
+        </preConditions>
+        <createTable tableName="lots">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="start_price" type="INTEGER"/>
+            <column name="finish_price" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.10" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="lot_requests"/>
+            </not>
+        </preConditions>
+        <createTable tableName="lot_requests">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="lot_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP" defaultValue="now()"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="lot_requests"
+                                 baseColumnNames="lot_id"
+                                 constraintName="lot_requests_lot"
+                                 referencedTableName="lots"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="1.0.11" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="auctions"/>
+            </not>
+        </preConditions>
+        <createTable tableName="auctions">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="lot_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="start_date" type="TIMESTAMP"/>
+            <column name="end_date" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="auctions"
+                                 baseColumnNames="lot_id"
+                                 constraintName="auctions_lot"
+                                 referencedTableName="lots"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="1.0.12" author="eugene.emelyanov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user_roles"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user_roles">
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="user_role"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
