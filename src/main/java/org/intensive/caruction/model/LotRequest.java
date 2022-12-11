@@ -18,7 +18,7 @@ public class LotRequest {
 
     @ManyToOne
     @JoinColumn(name = "lot_id")
-    private Lot lot;
+    private Auction auction;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

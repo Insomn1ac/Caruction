@@ -1,5 +1,6 @@
 package org.intensive.caruction.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,10 +8,13 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.Set;
 
 @Entity
@@ -39,6 +43,7 @@ public class User {
     @Column(name = "password", nullable = false)
     @NotBlank
     @Size(min = 4, max = 128)
+    @JsonIgnore
     private String password;
 
     @Column(name = "wallet_id")
@@ -64,5 +69,9 @@ public class User {
     public int id() {
         Assert.notNull(id, "Entity must have id");
         return id;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 }

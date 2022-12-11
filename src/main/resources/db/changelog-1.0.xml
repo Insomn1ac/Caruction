@@ -194,4 +194,29 @@
                                  referencedTableName="users"
                                  referencedColumnNames="id"/>
     </changeSet>
+    
+    <changeSet id="1.0.13" author="vladimir.grashchenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="admin_request"/>
+            </not>
+        </preConditions>
+        <createTable tableName="admin_request">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="admin_request"
+                                 baseColumnNames="user_id"
+                                 constraintName="users_admin"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
 </databaseChangeLog>
