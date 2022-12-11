@@ -24,14 +24,6 @@ public class Auction {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @ManyToOne
-    @JoinColumn(name = "lot_id")
-    private Lot lot;
-
     private String status;
 
     // TODO remove and undo NOT NULL for startDate in the database
