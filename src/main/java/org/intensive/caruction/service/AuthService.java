@@ -3,6 +3,7 @@ package org.intensive.caruction.service;
 import lombok.RequiredArgsConstructor;
 import org.intensive.caruction.dto.JwtResponse;
 import org.intensive.caruction.dto.LoginRequest;
+import org.intensive.caruction.exception.IllegalRequestDataException;
 import org.intensive.caruction.model.Role;
 import org.intensive.caruction.model.User;
 import org.intensive.caruction.model.Wallet;
@@ -50,6 +51,9 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(authBody.getName(), authBody.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        if (!userDetails.getUser().isEnabled()) {
+            throw new IllegalRequestDataException("Пользователь заблокирован");
+        }
 //        authenticationManager.authenticate(authInputToken);
         String token = jwtUtil.generateToken(userDetails.getUsername());
         return JwtResponse.builder()

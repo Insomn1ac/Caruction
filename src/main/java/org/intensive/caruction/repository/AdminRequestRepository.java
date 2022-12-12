@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdminRequestRepository extends JpaRepository<AdminRequest, Integer> {
+
+    void deleteAdminRequestByUserId(int id);
 }

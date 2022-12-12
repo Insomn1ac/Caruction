@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -20,9 +21,8 @@ public class AuctionServiceImpl {
         this.auctionRepository = auctionRepository;
     }
 
-    public ResponseEntity<?> save(Auction auction) {
+    public void save(Auction auction) {
         auctionRepository.save(auction);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     public Auction findAuctionById(Long id) {
@@ -32,11 +32,15 @@ public class AuctionServiceImpl {
                                 "Auction not found for id = " + id));
     }
 
-    public ResponseEntity<?> deleteAuctionById(Long id) {
+    public List<Auction> getActiveAuction() {
+        return auctionRepository.findAllByStatusIsTrue();
+    }
 
-        /* TODO take care about deleting all lots for deleted auction
-         * or resrict deletion when at least one lot exists
-         */
+    public List<Auction> getAllAuction() {
+        return auctionRepository.findAll();
+    }
+
+    public ResponseEntity<?> deleteAuctionById(Long id) {
         if (auctionRepository.findById(id).isPresent()) {
             auctionRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -44,5 +48,6 @@ public class AuctionServiceImpl {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
 }
