@@ -106,6 +106,7 @@ public class UserService {
         Optional<User> user = userRepository.findById(id);
         user.ifPresent(value -> value.setRoles(Set.of(Role.valueOf("ADMIN"), Role.valueOf("USER"))));
         userRepository.save(user.get());
+        adminRequestRepository.deleteAdminRequestByUserId(id);
     }
 
 }
